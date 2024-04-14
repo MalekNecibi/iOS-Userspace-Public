@@ -1,0 +1,77 @@
+HISTCONTROL=ignoreboth
+shopt -s histappend
+HISTSIZE=1000000
+HISTFILESIZE=5000000
+
+alias grep="grep --color=auto "
+
+# 'clear' alternatives
+# ref: https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
+
+# fully clear old buffer
+alias cc='clear ; printf "\033[99B\033[2J";'
+
+# fully clear old buffer, but preserve current command
+#alias c='printf "\033[2J\033[1F" ; echo -n "${PS1@P}" ; history | tail -n 1 | sed "s/^[ ]*[0-9]\+[ ]*//" ;'
+alias c='clear ; printf "\033[99B\033[2J\033[1F" ; echo -n "${PS1@P}" ; history 1 | sed "s/^[ ]*[0-9]\+[ ]*//" ;'
+
+unalias ls 2>/dev/null
+alias l='ls -al --color=auto '
+alias ll='ls -a -1 --color=auto '
+
+alias alist='activator listeners | grep -i '
+alias asend='activator send '
+alias aevents='activator events | grep -i '
+
+# copy (nclip = ignore newlines)
+alias clip='((tee /dev/tty) | (pbcopy 2>/dev/null) && (springcuts -r Clipboard_Fix >/dev/null)) '
+alias nclip="(tr -d '\n' | clip ; echo>>/dev/tty) "
+
+alias _pbpaste='{ pbpaste 2>/dev/null ; } '
+
+
+#head/tail with default 1
+#to customize change -1 to -DEFAULT
+h() { head -n "${1:-1}" ; }
+t() { tail -n "${1:-1}" ; }
+
+line() { head -n "${1:-1}" | tail -n 1 ; } 
+lines() { tail -n +"${1:-1}" | head -n +$((1+"${2:-${1:-0}}"-"${1:-0}")) ; } 
+
+# copy single line to clipboard
+n() { line "${1:-1}" | nclip ; }
+
+
+filza(){ springcuts -r "Open in Filza" -p "$(realpath "${1:-$PWD}")" > /dev/null ; } 
+
+
+alias plutil='plutil 2>&1 '
+
+alias newlines='{ sed G; }'
+
+alias vib='{ activator send libactivator.system.vibrate ; sleep 0.5 ; } '
+alias vib3='{ vib;vib;vib; }'
+
+alias _ignore='2> >(>&2 grep -v ^SubstituteLog) '
+
+alias ungray='{ activator send libactivator.system.previous-app ; sleep 1 ; activator send switch-off.com.PS.GrayscaleFS ; } '
+
+# ---- Handy Shortcuts ---- #
+# https://jdhao.github.io/2020/10/26/bash_emacs_style_shortcut/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
