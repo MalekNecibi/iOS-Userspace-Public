@@ -49,10 +49,12 @@ alias plutil='plutil 2>&1 '
 
 alias newlines='{ sed G; }'
 
+alias _ignore='2> >(>&2 grep -v ^SubstituteLog) '
+
 alias vib='{ activator send libactivator.system.vibrate ; sleep 0.5 ; } '
 alias vib3='{ vib;vib;vib; }'
 
-alias _ignore='2> >(>&2 grep -v ^SubstituteLog) '
+alias sc='springcuts '
 
 alias ungray='{ activator send libactivator.system.previous-app ; sleep 1 ; activator send switch-off.com.PS.GrayscaleFS ; } '
 

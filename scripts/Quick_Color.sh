@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
-script_name=$(basename "$BASH_SOURCE")
+activator send switch-off.com.PS.GrayscaleFS &
+activator send libactivator.system.vibrate &
 
-activator send libactivator.system.vibrate&
+script_name=$(basename "$BASH_SOURCE")
 
 # kill all instances of Quick_Color.sh (excluding self)
 2>/dev/null kill $(ps -eo "pid,args" | grep "$script_name" | grep -v -e "grep" -e "$$" -e "$BASHPID" | awk "{ print \$1 }") ;
