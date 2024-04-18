@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 timeout 3 bash -c '
 
 vc_running(){ ps aux | grep -q "[ ]/System/Library/CoreServices/CommandAndControl.app/CommandAndControl"; } ;

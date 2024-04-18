@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 _shortcut=${1:-"Voice Control OFF"}
 _total_time=${2:-300}
 _interval=${3:-300}
