@@ -31,9 +31,17 @@ fi
 touch "${MUTEX_FILE}"
 echo taking mutex...
 
-# springcuts -s > /dev/null # (optional) could be called again later anyway
+# Stop any running shortcut to avoid race conditions
+# springcuts -s > /dev/null # (optional) big side effect, but may be called later anyway
 
-Source_="$(activator current-app | tr -d '\n')"
+
+# Pause playback so media content can be returned to
+# TODO: preserve playback state
+activator send us.necibi.mediacontrols.pause;
+activator send libactivator.system.rotate.portrait;
+
+
+BundleId="$(activator current-app | tr -d '\n')"
 Stop_VC=""
 
 # if Voice Control was running beforehand, leave it running when we're done
@@ -41,12 +49,12 @@ ps aux | grep -q '[ ]/System/Library/CoreServices/CommandAndControl.app/CommandA
 echo Stop_VC: "$Stop_VC"
 
 # build json dictionary for Shortcuts input {string:string,string:bool}
-input_dict="$(printf '{"Source":"%s","Stop_VC":%s}' "${Source_}" "${Stop_VC}" )"
+input_dict="$(printf '{"Source":"%s","Stop_VC":%s}' "${BundleId}" "${Stop_VC}" )"
 
+# Bring up the prompt
 springcuts -r "TJ_Bash" -p "${input_dict}" -w &
 shortcut_pid="$!"
 
-#timeout_epoch="$(date +'%s' -d '+15 seconds')"
 timeout_epoch="$(date +'%s' -d '+5 minutes')"
 
 timed_out(){ 
@@ -63,17 +71,13 @@ shortcut_stopped(){
 }
 
 until shortcut_stopped || timed_out; do
-#    echo -n "* ";
-    sleep 1;
+    sleep 2;
 done
 
-printf "\n---\n";
-if timed_out ; then echo timed_out; fi
-if mutex_released ; then echo mutex_released; fi
-if shortcut_stopped ; then echo shortcut_stopped; fi
-echo "---"
 
-springcuts -s;  # stop running shortcuts
+# stop shortcuts triggered by springcuts
+# TODO: find more selective alternative for specific shortcut
+springcuts -s;
 
 if timed_out ; then
     # Error / Timeout
@@ -87,8 +91,8 @@ else
         # IGNORED
         echo mutex locked: logging IGNORED;
         springcuts -r "_TJ_Append" -p "IGNORED";
-        # TODO: reprimand
-        activator send libactivator.system.homebutton
+        # TODO: reprimand further
+        activator send libactivator.system.homebutton;
     fi
 fi
 
