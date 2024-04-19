@@ -1,26 +1,5 @@
 #!/usr/bin/env bash
 
-: '
-check for other instances of script
-check the /tmp/ mutex
-quit if present (maybe notify)
-
-create /tmp/ mutex 
-
-if voice control NOT enabled
-- enable it
-- remember needs to be disabled
-pause
-
-run shortcut, wait to finish
-- timeout 5 minutes ?
--- 30 seconds warning, vibrate x3
-
-if /tmp/ mutex still exists
-- reprimand
-- stop voice control
-'
-
 MUTEX_FILE="/tmp/time_journal"
 #MUTEX_FILE="$(mktemp /tmp/time_journal.XXXXXXXX)"
 
@@ -34,22 +13,26 @@ echo taking mutex...
 # Stop any running shortcut to avoid race conditions
 # springcuts -s > /dev/null # (optional) big side effect, but may be called later anyway
 
+BundleId="$(activator current-app)"
 
-# Pause playback so media content can be returned to
 # TODO: preserve playback state
 activator send us.necibi.mediacontrols.pause;
-activator send libactivator.system.rotate.portrait;
+activator send libactivator.system.homebutton; 
+#activator send libactivator.system.rotate.portrait;
 
-
-BundleId="$(activator current-app | tr -d '\n')"
-Stop_VC=""
+Stop_VC="false" # default minimize change
 
 # if Voice Control was running beforehand, leave it running when we're done
 ps aux | grep -q '[ ]/System/Library/CoreServices/CommandAndControl.app/CommandAndControl' && Stop_VC="false" || Stop_VC="true"
 echo Stop_VC: "$Stop_VC"
 
+springcuts -r "Voice Control ON" -w;
+
 # build json dictionary for Shortcuts input {string:string,string:bool}
 input_dict="$(printf '{"Source":"%s","Stop_VC":%s}' "${BundleId}" "${Stop_VC}" )"
+
+activator send us.necibi.mediacontrols.pause &
+activator send libactivator.system.homebutton &
 
 # Bring up the prompt
 springcuts -r "TJ_Bash" -p "${input_dict}" -w &
@@ -97,7 +80,8 @@ else
 fi
 
 
-[[ "$Stop_VC" == "true" ]] && { sleep 15 ; springcuts -r "Voice Control OFF" ; } &
 rm "$MUTEX_FILE";
 activator send libactivator.system.vibrate;
-exit;
+
+[[ "$Stop_VC" == "true" ]] && { sleep 15 ; springcuts -r "Voice Control OFF" ; }
+activator send libactivator.system.vibrate;
