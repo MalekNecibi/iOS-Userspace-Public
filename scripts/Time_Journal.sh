@@ -26,7 +26,7 @@ Stop_VC="false" # default minimize change
 ps aux | grep -q '[ ]/System/Library/CoreServices/CommandAndControl.app/CommandAndControl' && Stop_VC="false" || Stop_VC="true"
 echo Stop_VC: "$Stop_VC"
 
-springcuts -r "Voice Control ON" -w;
+activator send switch-on.us.necibi.voicecontrol;
 
 # build json dictionary for Shortcuts input {string:string,string:bool}
 input_dict="$(printf '{"Source":"%s","Stop_VC":%s}' "${BundleId}" "${Stop_VC}" )"
@@ -79,9 +79,11 @@ else
     fi
 fi
 
-
 rm "$MUTEX_FILE";
-activator send libactivator.system.vibrate;
 
-[[ "$Stop_VC" == "true" ]] && { sleep 15 ; springcuts -r "Voice Control OFF" ; }
-activator send libactivator.system.vibrate;
+[[ "$Stop_VC" == "true" ]] && {
+    sleep 15;
+    activator send libactivator.system.vibrate;
+    sleep 0.75;
+    activator send switch-off.us.necibi.voicecontrol;
+}

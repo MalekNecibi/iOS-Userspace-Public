@@ -54,9 +54,11 @@ alias _ignore='2> >(>&2 grep -v ^SubstituteLog) '
 alias vib='{ activator send libactivator.system.vibrate ; sleep 0.5 ; } '
 alias vib3='{ vib;vib;vib; }'
 
-alias sc='springcuts '
+alias sc='springcuts'
 
-alias ungray='{ activator send libactivator.system.previous-app ; sleep 1 ; activator send switch-off.com.PS.GrayscaleFS ; } '
+alias got=git
+
+alias ungray='{ activator send libactivator.system.previous-app ; sleep 1 ; springcuts -r "Turn on Color for 30 Minutes" ; } '
 
 # ---- Handy Shortcuts ---- #
 # https://jdhao.github.io/2020/10/26/bash_emacs_style_shortcut/
