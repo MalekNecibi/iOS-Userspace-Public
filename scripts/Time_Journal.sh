@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 MUTEX_FILE="/tmp/time_journal"
-#MUTEX_FILE="$(mktemp /tmp/time_journal.XXXXXXXX)"
 
 if [[ -f "${MUTEX_FILE}" ]] ; then
     springcuts -r "Notification" -p "mutex locked: ${MUTEX_FILE}";
@@ -24,7 +23,6 @@ Stop_VC="false" # default minimize change
 
 # if Voice Control was running beforehand, leave it running when we're done
 ps aux | grep -q '[ ]/System/Library/CoreServices/CommandAndControl.app/CommandAndControl' && Stop_VC="false" || Stop_VC="true"
-echo Stop_VC: "$Stop_VC"
 
 activator send switch-on.us.necibi.voicecontrol;
 
@@ -84,6 +82,6 @@ rm "$MUTEX_FILE";
 [[ "$Stop_VC" == "true" ]] && {
     sleep 15;
     activator send libactivator.system.vibrate;
-    sleep 0.75;
+    sleep 0.5;
     activator send switch-off.us.necibi.voicecontrol;
 }
