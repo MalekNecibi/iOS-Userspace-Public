@@ -12,8 +12,7 @@ alias grep="grep --color=auto "
 alias cc='clear ; printf "\033[99B\033[2J";'
 
 # fully clear old buffer, but preserve current command
-#alias c='printf "\033[2J\033[1F" ; echo -n "${PS1@P}" ; history | tail -n 1 | sed "s/^[ ]*[0-9]\+[ ]*//" ;'
-alias c='clear ; printf "\033[99B\033[2J\033[1F" ; echo -n "${PS1@P}" ; history 1 | sed "s/^[ ]*[0-9]\+[ ]*//" ;'
+alias c='clear ; printf "\033[99B\033[2J\033[1F" ; echo -n "${PS1@P}" ; HISTTIMEFORMAT="" history 1 | sed "s/^[ ]*[0-9]\+[ ]*//" ;'
 
 unalias ls 2>/dev/null
 alias l='ls -al --color=auto '
@@ -27,8 +26,12 @@ alias aevents='activator events | grep -i '
 alias clip='((tee /dev/tty) | (pbcopy 2>/dev/null) && (springcuts -r Clipboard_Fix >/dev/null)) '
 alias nclip="(tr -d '\n' | clip ; echo>>/dev/tty) "
 
+# alias _='2>/dev/null '
 alias _pbpaste='{ pbpaste 2>/dev/null ; } '
+alias _find='2>/dev/null find '
 
+hist(){ HISTTIMEFORMAT='' fc -ln -1 | sed '1 s/^\s*//'; }
+histclip(){ hist | head -c -1 | clip; echo>>/dev/tty; }
 
 #head/tail with default 1
 #to customize change -1 to -DEFAULT
@@ -44,8 +47,31 @@ n() { line "${1:-1}" | nclip ; }
 
 filza(){ springcuts -r "Open in Filza" -p "$(realpath "${1:-$PWD}")" > /dev/null ; } 
 
+fsstate(){
+    local fs_id
+    # clean/escape user input
+    fs_id="$(printf "%q" "$1")";
 
-alias plutil='plutil 2>&1 '
+    # Valid Flipswitches...
+    # return success iff state changed
+
+    # Invalid Flipswitches...
+    # switch-on : always return success (0)
+    # switch-off: always return failure (1)
+
+    activator send switch-on."$fs_id" \
+    && {
+        # success: (Previously off OR Invalid)
+        activator send switch-off."$fs_id" \
+        && echo "off" \
+        || echo "error";
+        true;                                   # avoid entering both cases
+    } || { 
+        echo "on"; 
+    };
+}
+
+alias plutil='2>&1 plutil '
 
 alias newlines='{ sed G; }'
 
