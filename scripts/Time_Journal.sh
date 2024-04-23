@@ -12,28 +12,18 @@ echo taking mutex...
 # Stop any running shortcut to avoid race conditions
 # springcuts -s > /dev/null # (optional) big side effect, but may be called later anyway
 
+# Preserve Initial State 
 BundleId="$(activator current-app)"
+Stop_VC=
+Resume=
 
-# TODO: preserve playback state
-activator send us.necibi.mediacontrols.pause;
-activator send libactivator.system.homebutton; 
-#activator send libactivator.system.rotate.portrait;
-
-Stop_VC="false" # default minimize change
-
-# if Voice Control was running beforehand, leave it running when we're done
-ps aux | grep -q '[ ]/System/Library/CoreServices/CommandAndControl.app/CommandAndControl' && Stop_VC="false" || Stop_VC="true"
-
-activator send switch-on.us.necibi.voicecontrol;
-
-# build json dictionary for Shortcuts input {string:string,string:bool}
-input_dict="$(printf '{"Source":"%s","Stop_VC":%s}' "${BundleId}" "${Stop_VC}" )"
-
-activator send us.necibi.mediacontrols.pause &
+# if state changes, undo changes when finished
+activator send switch-on.us.necibi.voicecontrol && Stop_VC="true";
 activator send libactivator.system.homebutton &
+activator send switch-off.us.necibi.mediacontrols && Resume="true";
 
 # Bring up the prompt
-springcuts -r "TJ_Bash" -p "${input_dict}" -w &
+springcuts -r "TJ_Bash" -p "${BundleId}" -w &
 shortcut_pid="$!"
 
 timeout_epoch="$(date +'%s' -d '+5 minutes')"
@@ -52,7 +42,7 @@ shortcut_stopped(){
 }
 
 until shortcut_stopped || timed_out; do
-    sleep 2;
+    sleep 1;
 done
 
 
@@ -67,7 +57,12 @@ if timed_out ; then
 else
     if mutex_released; then
         # Logged Successfully
-        echo mutex released: do nothing;
+        echo mutex released: return and resume;
+        activator send "${BundleId}";
+        [[ -n "${Resume}" ]] && {
+            activator send switch-on.us.necibi.mediacontrols;
+        }
+
     else
         # IGNORED
         echo mutex locked: logging IGNORED;
@@ -78,8 +73,7 @@ else
 fi
 
 rm "$MUTEX_FILE";
-
-[[ "$Stop_VC" == "true" ]] && {
+[[ -n "$Stop_VC" ]] && {
     sleep 15;
     activator send libactivator.system.vibrate;
     sleep 0.5;

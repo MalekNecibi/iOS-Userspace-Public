@@ -47,6 +47,8 @@ n() { line "${1:-1}" | nclip ; }
 
 filza(){ springcuts -r "Open in Filza" -p "$(realpath "${1:-$PWD}")" > /dev/null ; } 
 
+# result (0): "on","off"
+# error  (1): ""
 fsstate(){
     local fs_id
     # clean/escape user input
@@ -59,16 +61,18 @@ fsstate(){
     # switch-on : always return success (0)
     # switch-off: always return failure (1)
 
-    activator send switch-on."$fs_id" \
-    && {
-        # success: (Previously off OR Invalid)
-        activator send switch-off."$fs_id" \
-        && echo "off" \
-        || echo "error";
-        true;                                   # avoid entering both cases
-    } || { 
+    activator send switch-on."$fs_id";
+    if [[ 0 == $? ]] ; then
+        # Previously off OR Invalid
+        activator send switch-off."$fs_id";
+        if [[ 1 == $? ]] ; then
+            # Invalid id provided
+            return 1;
+        fi
+        echo "off"
+    else
         echo "on"; 
-    };
+    fi
 }
 
 alias plutil='2>&1 plutil '
