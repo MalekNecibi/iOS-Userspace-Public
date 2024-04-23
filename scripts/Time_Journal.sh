@@ -17,9 +17,16 @@ BundleId="$(activator current-app)"
 Stop_VC=
 Resume=
 
-# if state changes, undo changes when finished
+# Go home if orientation is landscape (keyboard unusable)
+orientation="$(python3 -c '
+from zxtouch.client import zxtouch;
+d=zxtouch("127.0.0.1");
+print(d.get_screen_orientation()[1][0]);
+d.disconnect();')"
+if [[ "1" -ne "${orientation}" ]] ; then
+    activator send libactivator.system.homebutton &
+fi
 activator send switch-on.us.necibi.voicecontrol && Stop_VC="true";
-activator send libactivator.system.homebutton &
 activator send switch-off.us.necibi.mediacontrols && Resume="true";
 
 # Bring up the prompt
@@ -69,6 +76,7 @@ else
         springcuts -r "_TJ_Append" -p "IGNORED";
         # TODO: reprimand further
         activator send libactivator.system.homebutton;
+        activator send libactivator.system.lock-and-wipe-credentials;
     fi
 fi
 
