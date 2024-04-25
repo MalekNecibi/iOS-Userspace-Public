@@ -12,7 +12,7 @@ start=$(date +"%s")
 stop=$((start + 10))
 until [[ "$(date +'%s')" -gt "$stop" ]] ; do
     activator send switch-off.com.PS.GrayscaleFS;
-    sleep 0.1;
+    sleep 0.25;
 done;
 
 activator send switch-on.com.PS.GrayscaleFS;

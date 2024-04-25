@@ -7,7 +7,6 @@ if [[ -f "${MUTEX_FILE}" ]] ; then
     exit 1;
 fi
 touch "${MUTEX_FILE}"
-echo taking mutex...
 
 # Stop any running shortcut to avoid race conditions
 # springcuts -s > /dev/null # (optional) big side effect, but may be called later anyway
@@ -26,8 +25,12 @@ d.disconnect();')"
 if [[ "1" -ne "${orientation}" ]] ; then
     activator send libactivator.system.homebutton &
 fi
-activator send switch-on.us.necibi.voicecontrol && Stop_VC="true";
+activator send switch-on.us.necibi.voicecontrol && {
+    Stop_VC="true";
+    screen -dm bash -c '/private/var/mobile/Malek/scripts/shortcut_scheduler.sh "Voice Control OFF" 330 15;' # optional: force turn off Voice Control after ~5 minutes
+}
 activator send switch-off.us.necibi.mediacontrols && Resume="true";
+activator send libactivator.system.vibrate &
 
 # Bring up the prompt
 springcuts -r "TJ_Bash" -p "${BundleId}" -w &
@@ -59,12 +62,10 @@ springcuts -s;
 
 if timed_out ; then
     # Error / Timeout
-    echo timed out: logging ERROR
     springcuts -r "_TJ_Append" -p "ERROR";
 else
     if mutex_released; then
         # Logged Successfully
-        echo mutex released: return and resume;
         activator send "${BundleId}";
         [[ -n "${Resume}" ]] && {
             activator send switch-on.us.necibi.mediacontrols;
@@ -72,9 +73,7 @@ else
 
     else
         # IGNORED
-        echo mutex locked: logging IGNORED;
         springcuts -r "_TJ_Append" -p "IGNORED";
-        # TODO: reprimand further
         activator send libactivator.system.homebutton;
         activator send libactivator.system.lock-and-wipe-credentials;
     fi
