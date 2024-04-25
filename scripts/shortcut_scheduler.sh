@@ -1,19 +1,37 @@
 #!/usr/bin/env bash
 
-_shortcut=${1:-"Voice Control OFF"}
+_shortcut=${1:-"Notification"}
 _total_time=${2:-300}
 _interval=${3:-300}
 
-# TODO : parameter validation
-if ! [[ "$_total_time" =~ ^[0-9]+$ && "$_interval" =~ ^[0-9]+$ ]] ; then
-  echo ERROR: invalid parameter provided 1>&2
+# Parameter Validation
+all_shortcuts(){ springcuts -l | tail -c +19 | sed "$ s/$/,/" | sed "s/,$//"; }
+
+# NOTE: newline not allowed in shortcut name, but treated as "special" character by grep -F
+all_shortcuts | grep -xFq "${_shortcut}"; # match whole shortcut name as literal string
+if [[ $? -ne 0 || "$_shortcut" =~ [$'\r\n'] ]] ; then
+    _shortcut_clean=$(printf %q "$_shortcut")
+    echo "ERROR: invalid parameter provided, shortcut=$_shortcut_clean" 1>&2
   exit 1
 fi
 
-if [[ ! "$_interval" -ge 10 ]]; then
+if ! [[ "$_total_time" =~ ^[0-9]+$ ]] ; then
+  echo "ERROR: invalid parameter provided, total_time=$_total_time" 1>&2
+  exit 1
+fi
+
+if ! [[ "$_interval" =~ ^[0-9]+$ ]] ; then
+  echo "ERROR: invalid parameter provided, interval=$_interval" 1>&2
+  exit 1
+fi
+
+if ! [[ "$_interval" -ge 10 ]]; then
   echo "WARNING: minimum interval is 10 seconds" 1>&2
   _interval=10
 fi
+
+
+# Validated, Sleeplock until scheduled time
 
 _stop_time=$(date +"%s" -d "+ "$_total_time" sec") ;
 
