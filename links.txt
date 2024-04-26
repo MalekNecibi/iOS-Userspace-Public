@@ -1,0 +1,13 @@
+HARD LINKS:
+.malekrc <-> /var/mobile/.malekrc
+.profile <-> /var/mobile/.profile
+ZXTouch/ <-> /var/mobile/Library/ZXTouch
+manually_tracked/libactivator.exported.plist <-> /var/mobile/Library/Preferences/libactivator.exported.plist
+
+
+SOFT LINKS:
+scripts/ <- /var/mobile/Malek/scripts
+us.necibi.shortcuts.bihourly.plist <- /Library/LaunchDaemons/us.necibi.shortcuts.bihourly.plist
+
+UNLINKED:
+manually_tracked/com.apple.jetsamproperties.D421.plist - /System/Library/LaunchDaemons/com.apple.jetsamproperties.D421.plist

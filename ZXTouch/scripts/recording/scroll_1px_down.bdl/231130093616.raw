@@ -1,0 +1,72 @@
+;; 18 : how many microseconds to wait
+;; 185263372 = wait 5,263,372 us = 5.26 seconds
+
+;; 10 : touch interface
+;; 10ttffaxxxbyyyyc
+;; tt = 11 : touch down (not precise?)
+;; tt = 10 : touch up
+;; tt = 12 : touch slide
+;; ff : which finger to move (arbitrary?)
+;; xxx : x coordinate from top left
+;; yyyy : y coordinate from top left
+
+
+;; wait 2.000000 seconds
+;;182000000
+
+;; tap ~550x1400 for 0.1 seconds
+1011040550014000
+180100000
+
+;; overcome scroll deadzone, set scroll origin
+;; move to ~550x1450
+1012040550014500
+180100000
+
+;; prevent inertial scrolling
+;; move to ~550x1500
+1012040550015000
+180100000
+
+;; set scroll destination (1px below origin)
+;; move finger 2 to ~550x1451
+1012040550014510
+180500000
+
+;; release finger
+1010040002013000
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

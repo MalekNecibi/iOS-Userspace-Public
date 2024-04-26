@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>double_click_volume_show_popup</key>
+	<integer>0</integer>
+	<key>switch_app_before_run_script</key>
+	<integer>0</integer>
+	<key>touch_indicator</key>
+	<dict>
+		<key>color</key>
+		<dict>
+			<key>alpha</key>
+			<real>0.30000001192092896</real>
+			<key>b</key>
+			<real>0.0</real>
+			<key>g</key>
+			<real>0.0</real>
+			<key>r</key>
+			<real>0.0</real>
+		</dict>
+		<key>show</key>
+		<integer>0</integer>
+	</dict>
+</dict>
+</plist>

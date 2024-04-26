@@ -1,0 +1,10 @@
+{'text': '9:34', 'x': '71', 'y': '52', 'width': '95', 'height': '34'}
+{'text': '•iII LTE 79 %', 'x': '882', 'y': '53', 'width': '210', 'height': '32'}
+{'text': 'ng.... Supported languages:. en-USfr-FRit-ITde-DEe', 'x': '4', 'y': '203', 'width': '1098', 'height': '45'}
+{'text': '</>', 'x': '84', 'y': '316', 'width': '76', 'height': '38'}
+{'text': 'orientation.bdl', 'x': '212', 'y': '320', 'width': '323', 'height': '39'}
+{'text': '</>', 'x': '84', 'y': '467', 'width': '76', 'height': '38'}
+{'text': 'ocr.bdl', 'x': '212', 'y': '471', 'width': '149', 'height': '39'}
+{'text': 'orientation_toggle.bdl', 'x': '212', 'y': '622', 'width': '497', 'height': '48'}
+{'text': 'Settings', 'x': '783', 'y': '2299', 'width': '119', 'height': '29'}
+{'text': 'Scripts', 'x': '230', 'y': '2299', 'width': '101', 'height': '28'}
