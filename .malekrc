@@ -26,11 +26,14 @@ alias aevents='activator events | grep -i '
 alias clip='((tee /dev/tty) | (pbcopy 2>/dev/null) && (springcuts -r Clipboard_Fix >/dev/null)) '
 alias nclip="(tr -d '\n' | clip ; echo>>/dev/tty) "
 
+# WIP: auto-exclude from history  (unless already excluded)
+# alias histexclude='[[ $EPOCHSECONDS == $(HISTTIMEFORMAT="%s " history 1 | head -n 1 | awk "{ print \$2 }") ]] && history -d -1; '
+
 # alias _='2>/dev/null '
 alias _pbpaste='{ pbpaste 2>/dev/null ; } '
 alias _find='2>/dev/null find '
 
-hist(){ HISTTIMEFORMAT='' fc -ln -1 | sed '1 s/^\s*//'; }
+hist(){ fc -ln -1 | sed '1 s/^\s*//'; }
 histclip(){ hist | head -c -1 | clip; echo>>/dev/tty; }
 
 #head/tail with default 1
