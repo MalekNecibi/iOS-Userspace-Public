@@ -7,6 +7,7 @@ import os
 device = zxtouch("127.0.0.1")
 
 VPNIGNORE_MINS = 15
+ABORT_SEC = 7.5
 
 ## Wait 3 seconds, then Enable VPN
 
@@ -49,7 +50,7 @@ device.run_shell_command("activator send libactivator.menu.3AD3152D-8D27-499E-A9
 
 device.show_toast(TOAST_WARNING, f"Enabling VPN in 5...", 1)
 
-for i in range(10):
+for i in range(1 + int(ABORT_SEC / 0.5)):
     time.sleep(0.5)
     current_app = subprocess.check_output(["activator", "current-app"]).strip().decode('utf-8')
     if ("" == current_app) or (initial_app != current_app):
