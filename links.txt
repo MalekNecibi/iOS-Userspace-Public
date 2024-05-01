@@ -3,7 +3,7 @@ HARD LINKS:
 .profile <-> /var/mobile/.profile
 ZXTouch/ <-> /var/mobile/Library/ZXTouch
 manually_tracked/libactivator.exported.plist <-> /var/mobile/Library/Preferences/libactivator.exported.plist
-
+com.miro.shortmoji2.plist <-> /var/mobile/Library/Preferences/com.miro.shortmoji2.plist
 
 SOFT LINKS:
 scripts/ <- /var/mobile/Malek/scripts
