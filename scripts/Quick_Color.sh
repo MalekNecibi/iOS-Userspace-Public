@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-activator send switch-off.com.PS.GrayscaleFS &
-activator send libactivator.system.vibrate &
+activator send switch-off.com.PS.GrayscaleFS ;
+activator send libactivator.system.vibrate ;
 
 script_name=$(basename "$BASH_SOURCE")
 
