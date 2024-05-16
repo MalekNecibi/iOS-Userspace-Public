@@ -23,7 +23,7 @@ alias asend='activator send '
 alias aevents='activator events | grep -i '
 
 # copy (nclip = ignore newlines)
-alias clip='((tee /dev/tty) | (pbcopy 2>/dev/null) && (springcuts -r Clipboard_Fix >/dev/null)) '
+alias clip="{ tee /dev/tty | 2>/dev/null pbcopy public.utf8-plain-text ; } "
 alias nclip="(tr -d '\n' | clip ; echo>>/dev/tty) "
 
 # WIP: auto-exclude from history  (unless already excluded)
