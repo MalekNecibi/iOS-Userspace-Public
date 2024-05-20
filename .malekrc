@@ -1,7 +1,7 @@
 HISTCONTROL=ignoreboth
 shopt -s histappend
-HISTSIZE=1000000
-HISTFILESIZE=5000000
+export HISTSIZE=1000000
+export HISTFILESIZE=5000000
 
 alias grep="grep --color=auto "
 
@@ -24,12 +24,13 @@ alias aevents='activator events | grep -i '
 
 # copy (nclip = ignore newlines)
 alias clip="{ tee /dev/tty | 2>/dev/null pbcopy public.utf8-plain-text ; } "
-alias nclip="(tr -d '\n' | clip ; echo>>/dev/tty) "
+alias nclip="{ tr -d '\n' | clip ; echo>>/dev/tty; } "
 
 # WIP: auto-exclude from history  (unless already excluded)
 # alias histexclude='[[ $EPOCHSECONDS == $(HISTTIMEFORMAT="%s " history 1 | head -n 1 | awk "{ print \$2 }") ]] && history -d -1; '
 
-# alias _='2>/dev/null '
+alias __='2>/dev/null '
+alias _='2> >(>&2 grep -v -e "^SubstituteLog: ") '
 alias _pbpaste='{ pbpaste 2>/dev/null ; } '
 alias _find='2>/dev/null find '
 
@@ -48,7 +49,7 @@ lines() { tail -n +"${1:-1}" | head -n +$((1+"${2:-${1:-0}}"-"${1:-0}")) ; }
 n() { line "${1:-1}" | nclip ; }
 
 
-filza(){ springcuts -r "Open in Filza" -p "$(realpath "${1:-$PWD}")" > /dev/null ; } 
+filza(){ springcuts -r "Open in Filza" -p "$(realpath -s "${1:-$PWD}")" > /dev/null ; } 
 
 # result (0): "on","off"
 # error  (1): ""
@@ -82,16 +83,15 @@ alias plutil='2>&1 plutil '
 
 alias newlines='{ sed G; }'
 
-alias _ignore='2> >(>&2 grep -v ^SubstituteLog) '
-
 alias vib='{ activator send libactivator.system.vibrate ; sleep 0.5 ; } '
 alias vib3='{ vib;vib;vib; }'
 
 alias sc='springcuts'
+notify(){ springcuts -r "Notification" -p "$*"; }
 
 alias got=git
 
-alias ungray='{ activator send libactivator.system.previous-app ; sleep 1 ; springcuts -r "Turn on Color for 30 Minutes" ; } '
+alias ungray='{ activator send libactivator.system.previous-app ; sleep 1 ; springcuts -r "Turn on Color for 15 Minutes" ; } '
 
 # ---- Handy Shortcuts ---- #
 # https://jdhao.github.io/2020/10/26/bash_emacs_style_shortcut/
