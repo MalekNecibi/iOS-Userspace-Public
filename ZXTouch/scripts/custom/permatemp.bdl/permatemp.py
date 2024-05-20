@@ -16,13 +16,8 @@ timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
 
 
-ps_cmd = ['ps', 'auxwwO', 'etime']
-with open(f'/var/mobile/Malek/logs/processes/{timestamp}.log', "a") as outfile:
-    subprocess.Popen(ps_cmd, stdout=outfile, stderr=outfile)
 
-
-
-# device.hide_keyboard();
+device.hide_keyboard();
 # time.sleep(1);
 # device.show_keyboard();
 
