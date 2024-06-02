@@ -91,7 +91,15 @@ notify(){ springcuts -r "Notification" -p "$*"; }
 
 alias got=git
 
-alias ungray='{ activator send libactivator.system.previous-app ; sleep 1 ; springcuts -r "Turn on Color for 15 Minutes" ; } '
+_ungray(){ springcuts -r _schedule -p '{"Minutes":'"${1:-15}"',"Shortcut":"Grayscale"}'; }
+
+alias ungray_1m='{ activator send libactivator.system.previous-app ; sleep 0.2 ; springcuts -r "Turn on Color for 1 Minute" ; } '
+alias ungray_15m='{ activator send libactivator.system.previous-app ; sleep 0.2 ; springcuts -r "Turn on Color for 15 Minutes" ; } '
+alias ungray_30m='{ activator send libactivator.system.previous-app ; sleep 0.2 ; springcuts -r "Turn on Color for 30 Minutes" ; } '
+alias ungray_2h='{ activator send libactivator.system.previous-app ; sleep 0.2 ; springcuts -r "Turn on Color for 2 Hours" ; } '
+alias ungray_4h='{ activator send libactivator.system.previous-app ; sleep 0.2 ; springcuts -r "Turn on Color for 4 Hours" ; } '
+
+alias ungray='ungray_15m'
 
 # ---- Handy Shortcuts ---- #
 # https://jdhao.github.io/2020/10/26/bash_emacs_style_shortcut/
