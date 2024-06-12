@@ -1,7 +1,7 @@
 HISTCONTROL=ignoreboth
 shopt -s histappend
-export HISTSIZE=1000000
-export HISTFILESIZE=5000000
+export HISTSIZE=10000000
+export HISTFILESIZE=50000000
 
 alias grep="grep --color=auto "
 
@@ -80,6 +80,7 @@ fsstate(){
 }
 
 alias plutil='2>&1 plutil '
+## plutil() { if [[ "$*" == *"-show"* ]]; then command 2>&1 plutil "$@"; else command plutil "$@"; fi; }
 
 alias newlines='{ sed G; }'
 
@@ -91,15 +92,14 @@ notify(){ springcuts -r "Notification" -p "$*"; }
 
 alias got=git
 
-_ungray(){ springcuts -r _schedule -p '{"Minutes":'"${1:-15}"',"Shortcut":"Grayscale"}'; }
+ungray(){ activator send libactivator.system.previous-app ; sleep 0.2 ; activator send switch-off.com.PS.GrayscaleFS ; springcuts -r _schedule -p '{"Minutes":'"${1:-15}"',"Shortcut":"Grayscale"}'; }
 
-alias ungray_1m='{ activator send libactivator.system.previous-app ; sleep 0.2 ; springcuts -r "Turn on Color for 1 Minute" ; } '
-alias ungray_15m='{ activator send libactivator.system.previous-app ; sleep 0.2 ; springcuts -r "Turn on Color for 15 Minutes" ; } '
-alias ungray_30m='{ activator send libactivator.system.previous-app ; sleep 0.2 ; springcuts -r "Turn on Color for 30 Minutes" ; } '
-alias ungray_2h='{ activator send libactivator.system.previous-app ; sleep 0.2 ; springcuts -r "Turn on Color for 2 Hours" ; } '
-alias ungray_4h='{ activator send libactivator.system.previous-app ; sleep 0.2 ; springcuts -r "Turn on Color for 4 Hours" ; } '
+alias ungray_1m='ungray 1 '
+alias ungray_15m='ungray 15 '
+alias ungray_30m='ungray 30 '
+alias ungray_2h='ungray 120 '
+alias ungray_4h='ungray 240 '
 
-alias ungray='ungray_15m'
 
 # ---- Handy Shortcuts ---- #
 # https://jdhao.github.io/2020/10/26/bash_emacs_style_shortcut/

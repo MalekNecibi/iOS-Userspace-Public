@@ -93,5 +93,6 @@ rm "$MUTEX_FILE";
     sleep 15;
     activator send libactivator.system.vibrate;
     activator send switch-off.us.necibi.voicecontrol;
+    sleep 1;
     springcuts -r "_unschedule" -p "Voice Control OFF"
 }
