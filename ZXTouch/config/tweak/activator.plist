@@ -9,6 +9,13 @@
 		<key>user_info</key>
 		<string>/var/mobile/Library/ZXTouch/scripts/recording/newterm_left.bdl</string>
 	</dict>
+	<key>libactivator.application-launch.com.brave.ios.browser</key>
+	<dict>
+		<key>type</key>
+		<integer>1</integer>
+		<key>user_info</key>
+		<string>/var/mobile/Library/ZXTouch/scripts/custom/VPN.bdl</string>
+	</dict>
 	<key>libactivator.application-launch.com.christianselig.Apollo</key>
 	<dict>
 		<key>type</key>
