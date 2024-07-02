@@ -7,7 +7,7 @@
 # Touch Simulation
 
 from zxtouch.client import zxtouch
-# from zxtouch.toasttypes import *
+from zxtouch.toasttypes import *
 import os # trigger activator
 
 device = zxtouch("127.0.0.1")

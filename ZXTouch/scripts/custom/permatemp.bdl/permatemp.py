@@ -17,9 +17,6 @@ timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
 
 
-device.hide_keyboard();
-# time.sleep(1);
-# device.show_keyboard();
 
 time.sleep(0.1)
 
@@ -28,6 +25,7 @@ time.sleep(0.1)
 
 ## Handy Tools
 # device.hide_keyboard();
+# device.show_keyboard();
 # bundleid = subprocess.check_output(["activator", "current-app"]).strip().decode('utf-8')
 # device.play_script("/var/mobile/Library/ZXTouch/scripts/recording/newterm_left.bdl")
 

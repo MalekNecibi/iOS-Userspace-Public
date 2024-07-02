@@ -8,32 +8,39 @@
 
 from zxtouch.client import zxtouch
 from zxtouch.toasttypes import *
-import os # trigger activator
+# import os # trigger activator
 
 device = zxtouch("127.0.0.1")
 
+def error_exit(err="-"):
+    device.show_toast(TOAST_ERROR, f"Cannot get screen orientation. Error {err}", 3)
+    device.disconnect()
+    print("ERROR", end="")
+    exit(0)
+    
 
 # screen orientation
 orientation_tuple = device.get_screen_orientation()
 if not orientation_tuple[0]:
-    device.show_toast(TOAST_ERROR, "Cannot get screen orientation. Error " + orientation_tuple[1], 2)
-    device.disconnect()
-    exit(0)
+    error_exit(orientation_tuple[1])
 
 orientation = int(float(orientation_tuple[1][0]))
-# 1 : "up",
-# 2 : "down",
-# 3 : "right",
-# 4 : "left",
+# print(orientation)
 
-if 4 == orientation:
-    # initially left
-    os.system('activator send libactivator.system.rotate.landscape-right')
-else:
-    # initially up/right/down
-    os.system('activator send libactivator.system.rotate.landscape-left')
+orientation_strs = {
+    1 : "up",
+    2 : "down",
+    3 : "right",
+    4 : "left",
+}
+if orientation not in orientation_strs:
+    error_exit(orientation)
+print(orientation_strs[orientation], end="")
+
 
 device.disconnect()
+exit()
+
 
 
 
