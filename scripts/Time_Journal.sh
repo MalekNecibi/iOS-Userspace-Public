@@ -2,6 +2,7 @@
 
 MUTEX_FILE="/tmp/time_journal"
 TIME_LIMIT="+5 min" # date -d format
+VC_SECONDS="20"
 
 
 if [[ -f "${MUTEX_FILE}" ]] ; then
@@ -20,8 +21,8 @@ Resume="false"
 
 activator send switch-on.us.necibi.voicecontrol && {
     Stop_VC="true";
-    screen -dm bash -c '/private/var/mobile/Malek/scripts/shortcut_scheduler.sh "Voice Control OFF" 330 15;' # optional: force turn off Voice Control after ~5 minutes
-    # TODO: generate from $TIME_LIMIT
+    screen -dm bash -c '/var/mobile/Malek/scripts/shortcut_scheduler.sh "Voice Control OFF" 330 15;' # optional: force turn off Voice Control after ~5 minutes,
+    # TODO: generate from $TIME_LIMIT + $VC_SECONDS + extra
 }
 
 # Go home if orientation is landscape (keyboard unusable)
@@ -31,7 +32,8 @@ d=zxtouch("127.0.0.1");
 print(d.get_screen_orientation()[1][0]);
 d.disconnect();')"
 if [[ "1" != "${orientation}" ]] ; then
-    activator send libactivator.system.homebutton &
+    # activator send libactivator.system.homebutton &
+    activator send libactivator.system.homebutton ; sleep 0.25 ;
 fi
 
 activator send switch-off.us.necibi.mediacontrols && Resume="true";
@@ -84,14 +86,13 @@ else
         # IGNORED
         springcuts -r "_TJ_Append" -p "IGNORED";
         activator send libactivator.system.homebutton;
-        activator send libactivator.system.lock-and-wipe-credentials;
+        # activator send libactivator.system.lock-and-wipe-credentials;
     fi
 fi
 
 rm "$MUTEX_FILE";
 [[ "true" == "$Stop_VC" ]] && {
-    sleep 15;
-    activator send libactivator.system.vibrate;
+    sleep "${VC_SECONDS}";
     activator send switch-off.us.necibi.voicecontrol;
     sleep 1;
     springcuts -r "_unschedule" -p "Voice Control OFF"
