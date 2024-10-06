@@ -87,18 +87,18 @@ alias newlines='{ sed G; }'
 alias vib='{ activator send libactivator.system.vibrate ; sleep 0.5 ; } '
 alias vib3='{ vib;vib;vib; }'
 
+alias prevapp='{ activator send libactivator.system.previous-app ; sleep 0.2 ; } '
+
+alias lock='{ activator send libactivator.lockscreen.show ; sleep 0.2 ; } '
+
 alias sc='springcuts'
 notify(){ springcuts -r "Notification" -p "$*"; }
 
 alias got=git
 
-ungray(){ activator send libactivator.system.previous-app ; sleep 0.2 ; activator send switch-off.com.PS.GrayscaleFS ; springcuts -r _schedule -p '{"Minutes":'"${1:-15}"',"Shortcut":"Grayscale"}'; }
+ungray(){ prevapp ; activator send switch-off.com.PS.GrayscaleFS ; springcuts -r _schedule -p '{"Minutes":'"${1:-15}"',"Shortcut":"Grayscale"}'; }
 
-alias ungray_1m='ungray 1 '
-alias ungray_15m='ungray 15 '
-alias ungray_30m='ungray 30 '
-alias ungray_2h='ungray 120 '
-alias ungray_4h='ungray 240 '
+alias color='ungray '
 
 
 # ---- Handy Shortcuts ---- #
