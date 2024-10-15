@@ -4,8 +4,6 @@ HARD LINKS:
 ZXTouch/ <-> /var/mobile/Library/ZXTouch
 manually_tracked/libactivator.exported.plist <-> /var/mobile/Library/Preferences/libactivator.exported.plist
 com.miro.shortmoji2.plist <-> /var/mobile/Library/Preferences/com.miro.shortmoji2.plist
-Signal/CodeResources <- /var/containers/Bundle/Application/3B9240F2-165B-4111-B388-F15CB8F98C7D/Signal.app/_CodeSignature/CodeResources
-Signal/Info.plist <- /var/containers/Bundle/Application/3B9240F2-165B-4111-B388-F15CB8F98C7D/Signal.app/Info.plist
 
 SOFT LINKS:
 scripts/ <- /var/mobile/Malek/scripts
