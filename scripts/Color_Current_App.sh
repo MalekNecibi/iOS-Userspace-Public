@@ -10,6 +10,7 @@ current_app="$(activator current-app)"
 # x: match whole line
 # q: don't print matches (optional)
 grep -xq "${current_app}" <<EOF
+com.agilebits.onepassword-ios
 com.apple.camera
 com.apple.DocumentsApp
 com.apple.facetime
@@ -20,6 +21,7 @@ com.apple.mobilephone
 com.apple.mobileslideshow
 com.chess.iphone
 com.chesstempo.mobile
+com.github.stormbreaker.prod
 com.google.Maps
 com.pakdata.QuranMajeedLite
 com.tigisoftware.Filza

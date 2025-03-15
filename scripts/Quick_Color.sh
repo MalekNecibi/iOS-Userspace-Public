@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 RUNTIME_INITIAL=10
-RUNTIME_EXTEND=15
+RUNTIME_EXTEND=25
 
 activator send switch-off.com.PS.GrayscaleFS ;
 activator send libactivator.system.vibrate ;

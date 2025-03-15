@@ -96,7 +96,7 @@ notify(){ springcuts -r "Notification" -p "$*"; }
 
 alias got=git
 
-ungray(){ prevapp ; activator send switch-off.com.PS.GrayscaleFS ; springcuts -r _schedule -p '{"Minutes":'"${1:-15}"',"Shortcut":"Grayscale"}'; }
+ungray(){ prevapp ; activator send switch-off.com.PS.GrayscaleFS ; springcuts -r _schedule -p '{"Minutes":'"${1:-30}"',"Shortcut":"Grayscale"}'; }
 
 alias color='ungray '
 
