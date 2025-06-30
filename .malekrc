@@ -91,14 +91,16 @@ alias prevapp='{ activator send libactivator.system.previous-app ; sleep 0.2 ; }
 
 alias lock='{ activator send libactivator.lockscreen.show ; sleep 0.2 ; } '
 
+alias home='{ activator send libactivator.system.homebutton ; sleep 0.2 ; } '
+
 alias sc='springcuts'
 notify(){ springcuts -r "Notification" -p "$*"; }
 
 alias got=git
 
-ungray(){ prevapp ; activator send switch-off.com.PS.GrayscaleFS ; springcuts -r _schedule -p '{"Minutes":'"${1:-30}"',"Shortcut":"Grayscale"}'; }
+color(){ prevapp ; springcuts -r "Quick Color Kill" -w ; activator send switch-off.com.PS.GrayscaleFS ; springcuts -r _schedule -p '{"Minutes":'"${1:-30}"',"Shortcut":"Grayscale"}'; }
 
-alias color='ungray '
+pause(){ springcuts -r _schedule -p '{"Minutes":'"${1:-30}"',"Shortcut":"Pause Playback"}'; }
 
 
 # ---- Handy Shortcuts ---- #
