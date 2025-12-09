@@ -6,6 +6,10 @@ import sys
 import os
 device = zxtouch("127.0.0.1")
 
+# Incident to disable VPN Script
+sys.exit()
+
+
 VPNIGNORE_MINS = 15
 ABORT_SEC = 7.5
 

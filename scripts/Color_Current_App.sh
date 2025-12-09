@@ -25,6 +25,7 @@ com.github.stormbreaker.prod
 com.google.Maps
 com.pakdata.QuranMajeedLite
 com.tigisoftware.Filza
+com.underthing.focus.friend
 InCallService
 org.lichess.mobileapp.official
 ws.hbang.Terminal

@@ -4,7 +4,9 @@ RUNTIME_INITIAL=10
 RUNTIME_EXTEND=25
 
 activator send switch-off.com.PS.GrayscaleFS ;
+already_colorful="$?" ; # 1 = color
 activator send libactivator.system.vibrate ;
+
 
 script_name=$(basename "$BASH_SOURCE")
 # TODO: Verify script_name
@@ -19,6 +21,11 @@ runtime="${RUNTIME_INITIAL}"
 if [[ $? -eq 0 ]] ;
 then
   runtime="${RUNTIME_EXTEND}"
+else
+  if [[ $already_colorful -ne 0 ]] ; then
+  # already colorful without Quick_Color.sh
+  exit ;
+  fi
 fi
 
 # TODO: replace above with below, split off into separate script. NEEDS TO ONLY DELETE OLDER INSTANCES
