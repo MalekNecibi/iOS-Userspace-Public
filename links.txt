@@ -8,6 +8,7 @@ com.miro.shortmoji2.plist <-> /var/mobile/Library/Preferences/com.miro.shortmoji
 SOFT LINKS:
 scripts/ <- /var/mobile/Malek/scripts
 us.necibi.shortcuts.bihourly.plist <- /Library/LaunchDaemons/us.necibi.shortcuts.bihourly.plist
+com.r333d.eqed.plist <- /Library/LaunchDaemons/com.r333d.eqed.plist
 
 UNLINKED:
 manually_tracked/com.apple.jetsamproperties.D421.plist - /System/Library/LaunchDaemons/com.apple.jetsamproperties.D421.plist
