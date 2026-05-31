@@ -100,7 +100,10 @@ alias got=git
 
 color(){ prevapp ; springcuts -r "Quick Color Kill" -w ; activator send switch-off.com.PS.GrayscaleFS ; springcuts -r _schedule -p '{"Minutes":'"${1:-30}"',"Shortcut":"Grayscale"}'; }
 
-pause(){ springcuts -r _schedule -p '{"Minutes":'"${1:-30}"',"Shortcut":"Pause Playback"}'; }
+pause(){ springcuts -r _schedule -p '{"Minutes":'"${1:-0}"',"Shortcut":"Pause Playback"}'; }
+
+
+github_assets(){ [[ "$1" =~ ^[A-Za-z0-9_\.\-]+/[A-Za-z0-9_\.\-]+$ ]] && { curl -s "https://api.github.com/repos/${1}/releases/latest" | jq -r '.assets[].browser_download_url' | xargs -I{} echo "curl -OL {}" ; } || echo "invalid repo: $@"; }
 
 
 # ---- Handy Shortcuts ---- #
